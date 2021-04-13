@@ -60,6 +60,7 @@ function App() {
       <textarea
         value={formatRules(rules)}
         onChange={(event) => console.log(event)}
+        style={{ width: 300 }}
       ></textarea>
       <div>
         Rule:{" "}
@@ -71,7 +72,7 @@ function App() {
           ))}
         </select>
         <div>
-          UID: <input defaultValue={activeRule} disabled />
+          UID: <input value={activeRule} disabled />
         </div>
       </div>
     </div>

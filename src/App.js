@@ -1,4 +1,4 @@
-import { useState, createElement } from "react";
+import { useState, createElement, useEffect } from "react";
 import "./App.css";
 
 const initRules = [
@@ -46,12 +46,24 @@ const formatRules = (rules) =>
     )
     .join(",");
 
+const textArea2Rules = (text) => {
+  let arr = text.split(/\n/);
+  arr.shift();
+  arr.pop();
+  return arr
+    .join("\n")
+    .split("END:VEVENT,BEGIN:VEVENT")
+    .map((str) => str.split(/\n/).filter((item) => item !== ""))
+    .map(parseRule);
+};
+
 const Input = ({ value, onChange }) => (
   <input value={value} onChange={onChange} />
 );
 
 function App() {
   const [rules, setRules] = useState(cleanRules(initRules).map(parseRule));
+  const [textArea, setTextArea] = useState(formatRules(rules));
   const [activeRule, setActiveRule] = useState(rules[0].UID);
 
   const key2Component = (prop, value) => {
@@ -69,7 +81,6 @@ function App() {
     }
   };
   const handleRuleSelect = (event) => {
-    console.log(event.target[event.target.selectedIndex].id);
     setActiveRule(event.target[event.target.selectedIndex].id);
   };
 
@@ -81,14 +92,18 @@ function App() {
     );
   };
 
+  useEffect(() => {
+    setRules(textArea2Rules(textArea));
+  }, [textArea]);
+
   return (
     <div className="App">
       <textarea
-        value={formatRules(rules)}
-        onChange={(event) => console.log(event)}
+        value={textArea}
+        onChange={(event) => setTextArea(event.target.value)}
         style={{ width: 300 }}
       ></textarea>
-      <form>
+      <form className="form">
         <div className="grid">
           <div className="label">Rule</div>
           <select onChange={handleRuleSelect}>
@@ -102,10 +117,10 @@ function App() {
         <div className="grid">
           {Object.entries(rules.find(({ UID }) => UID === activeRule)).map(
             ([prop, value]) => (
-              <>
+              <div key={prop}>
                 <div className="label">{prop}</div>
                 {key2Component(prop, value)}
-              </>
+              </div>
             )
           )}
         </div>

@@ -16,3 +16,7 @@
   text-overflow: ellipsis;
   font-size: 14px;
 }
+
+form {
+  width: 400px;
+}

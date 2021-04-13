@@ -125,7 +125,7 @@ function App() {
           )}
         </table>
       </form>
-      <pre>{JSON.stringify(rules, null, 2)}</pre>
+      <pre style={{ overflow: "auto" }}>{JSON.stringify(rules, null, 2)}</pre>
     </div>
   );
 }

@@ -76,14 +76,16 @@ function App() {
         style={{ width: 300 }}
       ></textarea>
       <form>
-        Rule{" "}
-        <select onChange={handleRuleSelect}>
-          {rules.map((rule) => (
-            <option key={rule.UID} id={rule.UID}>
-              {rule.SUMMARY}
-            </option>
-          ))}
-        </select>
+        <div className="grid">
+          <div className="label">Rule</div>
+          <select onChange={handleRuleSelect}>
+            {rules.map((rule) => (
+              <option key={rule.UID} id={rule.UID}>
+                {rule.SUMMARY}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="grid">
           {Object.entries(rules.find(({ UID }) => UID === activeRule)).map(
             ([prop, value]) => (

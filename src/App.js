@@ -92,6 +92,8 @@ function App() {
     );
   };
 
+  const handleTextAreaChange = ({ target: { value } }) => setTextArea(value);
+
   useEffect(() => {
     setRules(textArea2Rules(textArea));
   }, [textArea]);
@@ -100,7 +102,7 @@ function App() {
     <div className="App">
       <textarea
         value={textArea}
-        onChange={(event) => setTextArea(event.target.value)}
+        onChange={handleTextAreaChange}
         style={{ width: 300 }}
       ></textarea>
       <form className="form">

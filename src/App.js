@@ -7,11 +7,21 @@ const initRules = [
   SUMMARY:Some summary
   END:VEVENT
   `,
+  `BEGIN:VEVENT
+  UID:2134
+  SUMMARY:Another summary
+  END:VEVENT
+  `,
 ];
 
 // https://stackoverflow.com/questions/21895233/how-in-node-to-split-string-by-newline-n/21895354#21895354
-const cleanData = (data) =>
-  data.map((item) => item.split(/\n/).map((str) => str.trim()));
+const cleanRules = (data) =>
+  data.map((item) =>
+    item
+      .trim()
+      .split(/\n/)
+      .map((str) => str.trim())
+  );
 
 const parseRule = (data) => {
   return data.reduce((acc, str) => {
@@ -24,13 +34,27 @@ const parseRule = (data) => {
   }, {});
 };
 
+const formatRules = (rules) =>
+  rules
+    .map(
+      (rule) =>
+        "BEGIN:VEVENT\n" +
+        Object.entries(rule)
+          .map(([key, value]) => `${key}:${value}`)
+          .join("\n") +
+        "\nEND:VEVENT"
+    )
+    .join(",");
+
 function App() {
-  const [rules, setRules] = useState(cleanData(initRules));
+  const [rules] = useState(cleanRules(initRules).map(parseRule));
   return (
     <div className="App">
       <pre>{JSON.stringify(rules, null, 2)}</pre>
-      <pre>{JSON.stringify(parseRule(rules[0]), null, 2)}</pre>
-      <textarea value={rules.map((item) => item.join("\n"))}></textarea>
+      <textarea
+        value={formatRules(rules)}
+        onChange={(event) => console.log(event)}
+      ></textarea>
     </div>
   );
 }

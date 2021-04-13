@@ -84,10 +84,10 @@ function App() {
     setActiveRule(event.target[event.target.selectedIndex].id);
   };
 
-  const handlePropChange = (prop) => (event) => {
+  const handlePropChange = (prop) => ({ target: { value } }) => {
     setRules(
       rules.map((rule) =>
-        rule.UID === activeRule ? { ...rule, [prop]: event.target.value } : rule
+        rule.UID === activeRule ? { ...rule, [prop]: value } : rule
       )
     );
   };

@@ -107,6 +107,10 @@ function App() {
     setRules(textArea2Rules(textArea));
   }, [textArea]);
 
+  useEffect(() => {
+    setTextArea(formatRules(rules));
+  }, [rules]);
+
   return (
     <div className="App">
       <textarea

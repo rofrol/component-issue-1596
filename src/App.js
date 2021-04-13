@@ -46,7 +46,7 @@ const formatRules = (rules) =>
     )
     .join(",");
 
-const Summary = ({ prop, value, onChange }) => (
+const Input = ({ value, onChange }) => (
   <input value={value} onChange={onChange} />
 );
 
@@ -59,7 +59,7 @@ function App() {
       case "UID":
         return createElement("input", { value, disabled: true });
       case "SUMMARY":
-        return createElement(Summary, {
+        return createElement(Input, {
           prop,
           value,
           onChange: handlePropChange(prop),

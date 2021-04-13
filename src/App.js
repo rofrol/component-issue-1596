@@ -13,13 +13,14 @@ const initRules = [
   END:VEVENT
   `,
 ];
+const sep = "\n";
 
 // https://stackoverflow.com/questions/21895233/how-in-node-to-split-string-by-newline-n/21895354#21895354
 const cleanRules = (data) =>
   data.map((item) =>
     item
       .trim()
-      .split(/\n/)
+      .split(sep)
       .map((str) => str.trim())
   );
 
@@ -38,22 +39,24 @@ const formatRules = (rules) =>
   rules
     .map(
       (rule) =>
-        "BEGIN:VEVENT\n" +
+        "BEGIN:VEVENT" +
+        sep +
         Object.entries(rule)
           .map(([key, value]) => `${key}:${value}`)
-          .join("\n") +
-        "\nEND:VEVENT"
+          .join(sep) +
+        sep +
+        "END:VEVENT"
     )
     .join(",");
 
 const textArea2Rules = (text) => {
-  let arr = text.split(/\n/);
+  let arr = text.split(sep);
   arr.shift();
   arr.pop();
   return arr
-    .join("\n")
+    .join(sep)
     .split("END:VEVENT,BEGIN:VEVENT")
-    .map((str) => str.split(/\n/).filter((item) => item !== ""))
+    .map((str) => str.split(sep).filter((item) => item !== ""))
     .map(parseRule);
 };
 

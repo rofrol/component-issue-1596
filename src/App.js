@@ -46,27 +46,31 @@ const formatRules = (rules) =>
     )
     .join(",");
 
-const Summary = ({ prop, value }) => <input value={value} />;
-
-const key2Component = (prop, value) => {
-  switch (prop) {
-    case "UID":
-      return createElement(Summary, { value });
-    case "SUMMARY":
-      return createElement(Summary, { prop, value });
-    default:
-      return <></>;
-  }
-};
-
 function App() {
-  const [rules] = useState(cleanRules(initRules).map(parseRule));
+  const [rules, setRules] = useState(cleanRules(initRules).map(parseRule));
   const [activeRule, setActiveRule] = useState(rules[0].UID);
 
+  const Summary = ({ prop, value }) => (
+    <input value={value} onChange={handleSummaryChange} />
+  );
+
+  const key2Component = (prop, value) => {
+    switch (prop) {
+      case "UID":
+        return createElement("input", { value, disabled: true });
+      case "SUMMARY":
+        return createElement(Summary, { prop, value });
+      default:
+        return <></>;
+    }
+  };
   const handleRuleSelect = (event) => {
     console.log(event.target[event.target.selectedIndex].id);
     setActiveRule(event.target[event.target.selectedIndex].id);
   };
+
+  const handleSummaryChange = (event) => {};
+
   return (
     <div className="App">
       <pre>{JSON.stringify(rules, null, 2)}</pre>

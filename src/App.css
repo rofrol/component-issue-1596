@@ -7,6 +7,9 @@
   display: grid;
   grid-template-columns: 60px auto;
   grid-gap: 15px;
+}
+
+.rows {
   margin-top: 10px;
 }
 

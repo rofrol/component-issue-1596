@@ -114,16 +114,16 @@ function App() {
             ))}
           </select>
         </div>
-        <div className="grid">
+        <table className="rows">
           {Object.entries(rules.find(({ UID }) => UID === activeRule)).map(
             ([prop, value]) => (
-              <div key={prop}>
-                <div className="label">{prop}</div>
-                {key2Component(prop, value)}
-              </div>
+              <tr key={prop} className="item">
+                <td className="label">{prop}</td>
+                <td>{key2Component(prop, value)}</td>
+              </tr>
             )
           )}
-        </div>
+        </table>
       </form>
       <pre>{JSON.stringify(rules, null, 2)}</pre>
     </div>

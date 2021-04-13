@@ -1,4 +1,4 @@
-import { useState, createElement, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 const initRules = [
@@ -74,11 +74,9 @@ function App() {
       case "UID":
         return <input value={value} disabled />;
       case "SUMMARY":
-        return createElement(Input, {
-          prop,
-          value,
-          onChange: handlePropChange(prop),
-        });
+        return (
+          <Input prop={prop} value={value} onChange={handlePropChange(prop)} />
+        );
       default:
         return <></>;
     }

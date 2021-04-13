@@ -14,6 +14,8 @@ const initRules = [
   `,
 ];
 const sep = "\n";
+const begin = "BEGIN:VEVENT";
+const end = "END:VEVENT";
 
 // https://stackoverflow.com/questions/21895233/how-in-node-to-split-string-by-newline-n/21895354#21895354
 const cleanRules = (data) =>
@@ -26,11 +28,11 @@ const cleanRules = (data) =>
 
 const parseRule = (data) => {
   return data.reduce((acc, str) => {
+    if (str === begin || str === end) return acc;
     // https://stackoverflow.com/questions/4607745/split-string-only-on-first-instance-of-specified-character/59457829#59457829
     const index = str.indexOf(":");
     var [key, value] = [str.slice(0, index), str.slice(index + 1)];
-    if (!(value === "VEVENT" && (key === "BEGIN" || key === "END")))
-      acc[key] = value;
+    acc[key] = value;
     return acc;
   }, {});
 };
@@ -39,13 +41,13 @@ const formatRules = (rules) =>
   rules
     .map(
       (rule) =>
-        "BEGIN:VEVENT" +
+        begin +
         sep +
         Object.entries(rule)
           .map(([key, value]) => `${key}:${value}`)
           .join(sep) +
         sep +
-        "END:VEVENT"
+        end
     )
     .join(",");
 
@@ -55,7 +57,7 @@ const textArea2Rules = (text) => {
   arr.pop();
   return arr
     .join(sep)
-    .split("END:VEVENT,BEGIN:VEVENT")
+    .split(end + "," + begin)
     .map((str) => str.split(sep).filter((item) => item !== ""))
     .map(parseRule);
 };

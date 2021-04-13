@@ -62,7 +62,7 @@ function App() {
         return createElement(Summary, {
           prop,
           value,
-          onChange: handleSummaryChange,
+          onChange: handlePropChange(prop),
         });
       default:
         return <></>;
@@ -73,12 +73,10 @@ function App() {
     setActiveRule(event.target[event.target.selectedIndex].id);
   };
 
-  const handleSummaryChange = (event) => {
+  const handlePropChange = (prop) => (event) => {
     setRules(
       rules.map((rule) =>
-        rule.UID === activeRule
-          ? { ...rule, SUMMARY: event.target.value }
-          : rule
+        rule.UID === activeRule ? { ...rule, [prop]: event.target.value } : rule
       )
     );
   };

@@ -5,11 +5,13 @@ const initRules = [
   `BEGIN:VEVENT
   UID:123123
   SUMMARY:Some summary
+  DURATION:2D4H4M595
   END:VEVENT
   `,
   `BEGIN:VEVENT
   UID:2134
   SUMMARY:Another summary
+  DURATION:2D4H4M580
   END:VEVENT
   `,
 ];
@@ -76,6 +78,10 @@ function App() {
       case "UID":
         return <input value={value} disabled />;
       case "SUMMARY":
+        return (
+          <Input prop={prop} value={value} onChange={handlePropChange(prop)} />
+        );
+      case "DURATION":
         return (
           <Input prop={prop} value={value} onChange={handlePropChange(prop)} />
         );

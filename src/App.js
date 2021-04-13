@@ -69,7 +69,7 @@ function App() {
   const key2Component = (prop, value) => {
     switch (prop) {
       case "UID":
-        return createElement("input", { value, disabled: true });
+        return <input value={value} disabled />;
       case "SUMMARY":
         return createElement(Input, {
           prop,

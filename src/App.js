@@ -117,7 +117,7 @@ function App() {
         <table className="rows">
           {Object.entries(rules.find(({ UID }) => UID === activeRule)).map(
             ([prop, value]) => (
-              <tr key={prop} className="item">
+              <tr key={prop}>
                 <td className="label">{prop}</td>
                 <td>{key2Component(prop, value)}</td>
               </tr>

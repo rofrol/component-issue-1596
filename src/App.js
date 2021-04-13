@@ -70,7 +70,9 @@ function App() {
             </option>
           ))}
         </select>
-        <div>UID: {activeRule}</div>
+        <div>
+          UID: <input defaultValue={activeRule} disabled />
+        </div>
       </div>
     </div>
   );

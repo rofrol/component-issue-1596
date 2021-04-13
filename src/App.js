@@ -48,6 +48,12 @@ const formatRules = (rules) =>
 
 function App() {
   const [rules] = useState(cleanRules(initRules).map(parseRule));
+  const [activeRule, setActiveRule] = useState(rules[0].UID);
+
+  const handleRuleSelect = (event) => {
+    console.log(event.target[event.target.selectedIndex].id);
+    setActiveRule(event.target[event.target.selectedIndex].id);
+  };
   return (
     <div className="App">
       <pre>{JSON.stringify(rules, null, 2)}</pre>
@@ -55,6 +61,17 @@ function App() {
         value={formatRules(rules)}
         onChange={(event) => console.log(event)}
       ></textarea>
+      <div>
+        Rule:{" "}
+        <select onChange={handleRuleSelect}>
+          {rules.map((rule) => (
+            <option key={rule.UID} id={rule.UID}>
+              {rule.SUMMARY}
+            </option>
+          ))}
+        </select>
+        <div>UID: {activeRule}</div>
+      </div>
     </div>
   );
 }

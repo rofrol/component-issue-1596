@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, createElement } from "react";
 import "./App.css";
 
 const initRules = [
@@ -46,6 +46,19 @@ const formatRules = (rules) =>
     )
     .join(",");
 
+const Summary = ({ prop, value }) => <input value={value} />;
+
+const key2Component = (prop, value) => {
+  switch (prop) {
+    case "UID":
+      return createElement(Summary, { value });
+    case "SUMMARY":
+      return createElement(Summary, { prop, value });
+    default:
+      return <></>;
+  }
+};
+
 function App() {
   const [rules] = useState(cleanRules(initRules).map(parseRule));
   const [activeRule, setActiveRule] = useState(rules[0].UID);
@@ -62,8 +75,8 @@ function App() {
         onChange={(event) => console.log(event)}
         style={{ width: 300 }}
       ></textarea>
-      <div>
-        Rule:{" "}
+      <form>
+        Rule{" "}
         <select onChange={handleRuleSelect}>
           {rules.map((rule) => (
             <option key={rule.UID} id={rule.UID}>
@@ -71,10 +84,17 @@ function App() {
             </option>
           ))}
         </select>
-        <div>
-          UID: <input value={activeRule} disabled />
+        <div className="grid">
+          {Object.entries(rules.find(({ UID }) => UID === activeRule)).map(
+            ([prop, value]) => (
+              <>
+                <div className="label">{prop}</div>
+                {key2Component(prop, value)}
+              </>
+            )
+          )}
         </div>
-      </div>
+      </form>
     </div>
   );
 }

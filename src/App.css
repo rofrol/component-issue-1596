@@ -2,3 +2,17 @@
   display: flex;
   flex-wrap: no-wrap;
 }
+
+.grid {
+  display: grid;
+  grid-template-columns: 60px auto;
+  grid-gap: 15px;
+  margin-top: 10px;
+}
+
+.label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 14px;
+}

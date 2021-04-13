@@ -80,8 +80,8 @@ function App() {
         return <></>;
     }
   };
-  const handleRuleSelect = (event) => {
-    setActiveRule(event.target[event.target.selectedIndex].id);
+  const handleRuleSelect = ({ target }) => {
+    setActiveRule(target[target.selectedIndex].id);
   };
 
   const handlePropChange = (prop) => ({ target: { value } }) => {
